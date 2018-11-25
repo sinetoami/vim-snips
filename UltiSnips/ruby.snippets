@@ -1,5 +1,89 @@
-snippet class "class ClassName ... end"
-class ${1:`substitute(expand('%:t:r:r:r'), '\v%(^(.)|_(.))', '\u\1\u\2', 'g')`}
+global !p
+
+def capitalize_basename(snip):
+		return snip.basename.capitalize()
+
+endglobal
+
+## RUBY SNIPPETS
+snippet #! "!/usr/bin/env ruby"
+#!/usr/bin/env ruby
 ${0}
+endsnippet
+
+# if statement
+snippet if "if ... end"
+if ${1:condition}
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet ifl "<do something> if ..."
+${1:${VISUAL}} if ${0:condition}
+endsnippet
+
+snippet ife "if ... end"
+if ${1:condition}
+	${2:${VISUAL:# do something}}
+else
+	${0}
+end
+endsnippet
+
+snippet unless "unless ... end"
+unless ${1:condition}
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet unlessl "<do something> unless ..."
+${1:${VISUAL}} unless ${0:condition}
+endsnippet
+
+# case switch
+snippet case "case .. when ... end"
+case ${1:variable}
+when ${2:expression}
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet casee "case .. when ... else ... end"
+case ${1:variable}
+when ${2:expression}
+	${3:${VISUAL:# do something}}
+else
+	${0}
+end
+endsnippet
+
+# class
+snippet cla "class ... end"
+class ${1:`!p snip.rv = capitalize_basename(snip)`}
+	${0}
+end
+endsnippet
+
+snippet clai "class ... initialize ... end"
+class ${1:`!p snip.rv = capitalize_basename(snip)`}
+	def initialize(${2:args})
+		${0}
+	end
+end
+endsnippet
+
+snippet claia "class ... initialize(args) ... end"
+class ${1:`!p snip.rv = capitalize_basename(snip)`}
+	def initialize(${2:arg1}, ${3:arg2})
+		@$2 = $2
+		@$3 = $3
+	end
+end
+endsnippet
+
+# module
+snippet modu "module ... end"
+module ${1:`!p snip.rv = capitalize_basename(snip)`}
+	${0}
 end
 endsnippet
