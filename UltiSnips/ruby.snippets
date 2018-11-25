@@ -1,7 +1,7 @@
 global !p
 
-def capitalize_basename(snip):
-		return snip.basename.capitalize()
+def camelize_basename(snip):
+		return ''.join(x for x in snip.basename.title().split('_'))
 
 endglobal
 
@@ -18,7 +18,7 @@ if ${1:condition}
 end
 endsnippet
 
-snippet ifl "<do something> if ..."
+snippet ifl "[do something] if [condition] "
 ${1:${VISUAL}} if ${0:condition}
 endsnippet
 
@@ -30,25 +30,30 @@ else
 end
 endsnippet
 
+snippet elsif "elsif [condition]"
+elsif ${1:condition}
+	${0:${VISUAL:# do something}}
+endsnippet
+
 snippet unless "unless ... end"
 unless ${1:condition}
 	${0:${VISUAL:# do something}}
 end
 endsnippet
 
-snippet unlessl "<do something> unless ..."
+snippet unlessl "[do something] unless [condition]"
 ${1:${VISUAL}} unless ${0:condition}
 endsnippet
 
 # case switch
-snippet case "case .. when ... end"
+snippet case "case ... when ... end"
 case ${1:variable}
 when ${2:expression}
 	${0:${VISUAL:# do something}}
 end
 endsnippet
 
-snippet casee "case .. when ... else ... end"
+snippet casee "case ... when ... else ... end"
 case ${1:variable}
 when ${2:expression}
 	${3:${VISUAL:# do something}}
@@ -57,15 +62,20 @@ else
 end
 endsnippet
 
+snippet when "when [expression] ..."
+when ${1:expression}
+	${0:${VISUAL:# do something}}
+endsnippet
+
 # class
 snippet cla "class ... end"
-class ${1:`!p snip.rv = capitalize_basename(snip)`}
+class ${1:`!p snip.rv = camelize_basename(snip)`}
 	${0}
 end
 endsnippet
 
 snippet clai "class ... initialize ... end"
-class ${1:`!p snip.rv = capitalize_basename(snip)`}
+class ${1:`!p snip.rv = camelize_basename(snip)`}
 	def initialize(${2:args})
 		${0}
 	end
@@ -73,7 +83,7 @@ end
 endsnippet
 
 snippet claia "class ... initialize(args) ... end"
-class ${1:`!p snip.rv = capitalize_basename(snip)`}
+class ${1:`!p snip.rv = camelize_basename(snip)`}
 	def initialize(${2:arg1}, ${3:arg2})
 		@$2 = $2
 		@$3 = $3
@@ -81,9 +91,132 @@ class ${1:`!p snip.rv = capitalize_basename(snip)`}
 end
 endsnippet
 
+# do/end block
+snippet do "do ... end"
+do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet doa "do |args| ... end"
+do |${1:args}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+# block line
+snippet blk "{ ... }"
+{ ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet blka "{ |arg| ... }"
+{ |${1:arg}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+# each blocks
+snippet "(\S+)\.eachd" ".each do |var| ... end" r
+`!p snip.rv=match.group(1)`.each do |${1:var}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.eachl" ".each { |var| ... }" br
+`!p snip.rv=match.group(1)`.each { |${1:var}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?k(ey)?d" ".each_key do |key| ... end" r
+`!p snip.rv=match.group(1)`.each_key do |${1:key}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?k(ey)?l" ".each_key { |key| ... }" r
+`!p snip.rv=match.group(1)`.each_key { |${1:key}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?val(ue)?d" ".each_value do |value| ... end" r
+`!p snip.rv=match.group(1)`.each_value do |${1:value}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?val(ue)?l" ".each_value { |value| ... }" r
+`!p snip.rv=match.group(1)`.each_value { |${1:value}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?s(lice)?d" ".each_slice(n) do |slice| ... end" r
+`!p snip.rv=match.group(1)`.each_slice(${1:n}) do |${2:slice}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?s(lice)?l" ".each_slice(n) { |slice| ... }" r
+`!p snip.rv=match.group(1)`.each_slice(${1:n}) { |${2:slice}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?by(te)?d" ".each_byte do |byte| ... end" r
+`!p snip.rv=match.group(1)`.each_byte do |${1:byte}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?by(te)?l" ".each_byte { |byte| ... }" r
+`!p snip.rv=match.group(1)`.each_byte { |${1:byte}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?ch(ar)?d" ".each_char do |char| ... end" r
+`!p snip.rv=match.group(1)`.each_char do |${1:char}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?ch(ar)?l" ".each_char { |char| ... }" r
+`!p snip.rv=match.group(1)`.each_char { |${1:char}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?in(dex)?d" ".each_index do |index| ... end" r
+`!p snip.rv=match.group(1)`.each_index do |${1:index}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?in(dex)?l" ".each_index { |index| ... }" r
+`!p snip.rv=match.group(1)`.each_index { |${1:index}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?li(ne)?d" ".each_line do |line| ... end" r
+`!p snip.rv=match.group(1)`.each_line do |${1:line}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?li(ne)?l" ".each_line { |line| ... }" r
+`!p snip.rv=match.group(1)`.each_line { |${1:line}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\S+)\.each_?wi(th)?d" ".each_with_index do |index| ... end" r
+`!p snip.rv=match.group(1)`.each_with_index do |${1:index}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?wi(th)?l" ".each_index { |index| ... }" r
+`!p snip.rv=match.group(1)`.each_with_index { |${1:index}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
+snippet "(\s+)\.each_?pa(ir)?d" ".each_pair do |key, value| ... end" r
+`!p snip.rv=match.group(1)`.each_pair do |${1:key}, ${2:value}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.each_?pa(ir)?l" ".each_pair { |key, value| ... }" r
+`!p snip.rv=match.group(1)`.each_pair { |${1:key}, ${2:value}| ${0:${VISUAL:[do something]}} }
+endsnippet
+
 # module
 snippet modu "module ... end"
-module ${1:`!p snip.rv = capitalize_basename(snip)`}
+module ${1:`!p snip.rv = camelize_basename(snip)`}
 	${0}
 end
 endsnippet
