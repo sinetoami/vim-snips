@@ -479,3 +479,77 @@ module ${1:`!p snip.rv = camelize_basename(snip)`}
 	${0:${VISUAL:# module body}}
 end
 endsnippet
+
+########################
+## RSPEC SNIPPETS
+#########################
+snippet desc "describe .. do .. end"
+describe ${1:`!p snip.rv=re.sub("Spec", "", camelize_basename(snip))`} do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet descm "describe 'method_name' .. do .. end"
+describe '${1:method}' do
+	${0:${VISUAL:peding 'Not implemented'}}
+end
+endsnippet
+
+snippet cont "context 'message' .. do ..  end"
+context '${1:message}' do
+	${0:${VISUAL}}
+end
+endsnippet
+
+# snippet bef
+# 	before :${1:each} do
+# 		${0}
+# 	end
+# snippet aft
+# 	after :${1:each} do
+# 		${0}
+# 	end
+# snippet let
+# 	let(:${1:object}) { ${0} }
+# snippet let!
+# 	let!(:${1:object}) { ${0} }
+# snippet subj
+# 	subject { ${0} }
+# snippet s.
+# 	subject.${0:method}
+# snippet spec
+# 	specify { subject.${0} }
+# snippet exp
+# 	expect(${1:object}).to ${0}
+# snippet expb
+# 	expect { ${1:object} }.to ${0}
+# snippet experr
+# 	expect { ${1:object} }.to raise_error ${2:StandardError}, /${0:message_regex}/
+# snippet allow
+# 	allow(${1:object}).to ${0}
+# snippet shared
+# 	shared_examples ${0:'shared examples name'}
+# snippet ibl
+# 	it_behaves_like ${0:'shared examples name'}
+# snippet it
+# 	it '${1:spec_name}' do
+# 		${0}
+# 	end
+# snippet its
+# 	its(:${1:method}) { should ${0} }
+# snippet is
+# 	it { should ${0} }
+# snippet isn
+# 	it { should_not ${0} }
+# snippet iexp
+# 	it { expect(${1:object}).${2} ${0} }
+# snippet iexpb
+# 	it { expect { ${1:object} }.${2} ${0} }
+# snippet iiexp
+# 	it { is_expected.to ${0} }
+# snippet iiexpn
+# 	it { is_expected.not_to ${0} }
+# snippet agg
+# 	aggregate_failures '${1:message}' do
+# 		${0}
+# 	end
