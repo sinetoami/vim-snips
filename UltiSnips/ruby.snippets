@@ -10,7 +10,7 @@ def complete(t, opts):
 				opts = [ m[len(t):] for m in opts if m.startswith(t) ]
 		if len(opts) == 1:
 				return opts[0]
-		return ','.join(opts)
+		return ' | '.join(opts)
 
 def write_instance_vars(arglist, snip, is_clas):
 	args = str(arglist).split(',')
@@ -30,7 +30,7 @@ endglobal
 ########################
 
 #
-# head comments
+# head snippets
 #
 snippet #! "!/usr/bin/env ruby"
 #!/usr/bin/env ruby
@@ -38,7 +38,21 @@ ${0}
 endsnippet
 
 snippet frozen "# frozen_string_literal: true"
-	# frozen_string_literal: true
+# frozen_string_literal: true
+${0}
+endsnippet
+
+snippet "^# ?[uU][tT][fF]-?8" "# encoding: UTF-8" r
+# $1`!p snip.rv=complete(t[1], ['enconding: utf-8', 'coding: utf-8', '-*- codign: utf-8 -*-'])`
+${0}
+endsnippet
+
+snippet req "require"
+require '${0:file_path}'
+endsnippet
+
+snippet reqr "require_relative"
+require_relative '${0:file_path}'
 endsnippet
 
 #
@@ -102,56 +116,6 @@ when ${1:expression}
 endsnippet
 
 #
-# class
-#
-snippet cla "class ... end"
-class ${1:`!p snip.rv = camelize_basename(snip)`}
-	${0:${VISUAL:# class body}}
-end
-endsnippet
-
-snippet clai "class ... initialize(args) ... end"
-class ${2:`!p snip.rv = camelize_basename(snip)`}
-	def initialize($1)`!p write_instance_vars(t[1], snip, True)`
-	end
-
-	${0:${VISUAL:# class body}}
-end
-endsnippet
-
-snippet cla< "class ... < ParentClass ... end "
-class ${1:`!p snip.rv = camelize_basename(snip)`} < ${2:ParentClass}
-	${0:${VISUAL:# class body}}
-end
-endsnippet
-
-snippet clai< "class ... initialize(args) ... end"
-class ${2:`!p snip.rv = camelize_basename(snip)`} < ${3:ParentClass}
-	def initialize($1)`!p write_instance_vars(t[1], snip, True)`
-	end
-
-	${0:${VISUAL:# class body}}
-end
-endsnippet
-
-snippet defi "def initialize(args) ... end"
-def initialize($1)`!p write_instance_vars(t[1], snip, False)`$0
-end
-endsnippet
-
-snippet def "def ... end"
-def ${1:function_name}${2:(${3:*args})}
-	${0:${VISUAL:# do something}}
-end
-endsnippet
-
-snippet selfdef "self.def ... end"
-self.def ${1:function_name}${2:(${3:*args})}
-	${0:${VISUAL:# do something}}
-end
-endsnippet
-
-#
 # do/end block
 #
 snippet do "do ... end"
@@ -175,6 +139,21 @@ endsnippet
 
 snippet blka "{ |arg| ... }"
 { |${1:arg}| ${0:${VISUAL}} }
+endsnippet
+
+#
+# loop blocks
+#
+snippet while "while ... end"
+while ${1:condition}
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet forin "for .. in .. end"
+for ${1:item} in ${2:data}
+	${0:${VISUAL:# do something}}
+end
 endsnippet
 
 #
@@ -370,6 +349,100 @@ endsnippet
 
 snippet "(\S+)\.in(dex)?d" ".index do |item| ... end" r
 `!p snip.rv=match.group(1)`.index do |${1:item}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+#
+# class
+#
+snippet attr "attr_reader"
+attr_reader :${0:${VISUAL:attr_name}}
+endsnippet
+
+snippet attw "attr_write"
+attr_writer :${0:${VISUAL:attr_name}}
+endsnippet
+
+snippet attac "attr_accessor"
+attr_accessor :${0:${VISUAL:attr_name}}
+endsnippet
+
+snippet inc "include"
+include ${0:${VISUAL:IncludeClass}}
+endsnippet
+
+snippet priv "private" m
+private
+
+	${0:${VISUAL}}
+endsnippet
+
+snippet prot "protected" m
+private
+
+	${0:${VISUAL}}
+endsnippet
+
+snippet Enum "include Enumerable ..."
+include Enumerable
+
+def each(&block)
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet Comp "include Comparable ..."
+include Comparable
+
+def <=>(other)
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet cla "class ... end"
+class ${1:`!p snip.rv = camelize_basename(snip)`}
+	${0:${VISUAL:# class body}}
+end
+endsnippet
+
+snippet clai "class ... initialize(args) ... end"
+class ${2:`!p snip.rv = camelize_basename(snip)`}
+	def initialize($1)`!p write_instance_vars(t[1], snip, True)`
+	end
+
+	${0:${VISUAL:# class body}}
+end
+endsnippet
+
+snippet cla< "class ... < ParentClass ... end "
+class ${1:`!p snip.rv = camelize_basename(snip)`} < ${2:ParentClass}
+	${0:${VISUAL:# class body}}
+end
+endsnippet
+
+snippet clai< "class ... initialize(args) ... end"
+class ${2:`!p snip.rv = camelize_basename(snip)`} < ${3:ParentClass}
+	def initialize($1)`!p write_instance_vars(t[1], snip, True)`
+	end
+
+	${0:${VISUAL:# class body}}
+end
+endsnippet
+
+snippet defi "def initialize(args) ... end"
+def initialize($1)`!p write_instance_vars(t[1], snip, False)`$0
+end
+endsnippet
+
+snippet def "def ... end"
+def ${1:function_name}${2:(${3:*args})}
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet selfdef "self.def ... end"
+self.def ${1:function_name}${2:(${3:*args})}
 	${0:${VISUAL:# do something}}
 end
 endsnippet
