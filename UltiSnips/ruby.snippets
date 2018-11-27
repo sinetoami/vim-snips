@@ -156,6 +156,28 @@ for ${1:item} in ${2:data}
 end
 endsnippet
 
+snippet upto "<from>.upto(<to>) do |item| ... end"
+${1:from}.upto(${2:to}) do |${3:item}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet downto "<from>.downto(<to>) do |item| ... end"
+${1:from}.downto(${2:to}) do |${3:item}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet step "<from>.step(<to>, <step>) do |item| ... end"
+${1:from}.step(${2:to}, ${3:step}) do |${4:item}|
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet "(\S+)\.times" ".times { |i| ... }" r
+`!p snip.rv=match.group(1)`.times { |${1:i}| ${0:${VISUAL}} }
+endsnippet
+
 #
 # each blocks
 #
@@ -431,8 +453,10 @@ end
 endsnippet
 
 snippet defi "def initialize(args) ... end"
-def initialize($1)`!p write_instance_vars(t[1], snip, False)`$0
+def initialize($1)`!p write_instance_vars(t[1], snip, False)`
 end
+
+${0}
 endsnippet
 
 snippet def "def ... end"
