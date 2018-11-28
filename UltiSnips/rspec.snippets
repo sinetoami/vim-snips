@@ -1,0 +1,136 @@
+priority 1
+extends ruby
+
+global !p
+
+def camelize_basename(snip):
+		return ''.join(x for x in snip.basename.title().split('_'))
+
+endglobal
+
+########################
+## RSPEC SNIPPETS
+#########################
+snippet desc "describe .. do .. end"
+describe ${1:`!p snip.rv=re.sub("Spec", "", camelize_basename(snip))`} do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet descd "describe DescribeType, 'description' .. do .. end"
+describe ${1:`!p snip.rv=re.sub("Spec", "", camelize_basename(snip))`}, '${1:description}' do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet descm "describe 'method_name' .. do .. end"
+describe '${1:method}' do
+	${0:${VISUAL:peding 'Not implemented'}}
+end
+endsnippet
+
+snippet cont "context 'message' .. do ..  end"
+context '${1:message}' do
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet bef "before .. do .. end"
+before(:${1:each}) do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet aft "before .. do .. end"
+after(:${1:each}) do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet let "let(:object) { ... }"
+let(:${1:object}) { ${0:${VISUAL}} }
+endsnippet
+
+snippet let! "let(:object) { ... }"
+let!(:${1:object}) { ${0:${VISUAL}} }
+endsnippet
+
+snippet it "it .. do ... end"
+it '${1:message}' do
+	${0:${VISUAL:# do something}}
+end
+endsnippet
+
+snippet itd "it (pedding)"
+it '${0:does something}'
+endsnippet
+
+snippet exp "expect(..). ..."
+expect(${1:actual}).${2} ${0:${VISUAL:expected}}
+endsnippet
+
+# eq
+snippet expe "expect(..).to eq(..)"
+expect(${1:actual}).to eq(${0:${VISUAL:expected}})
+endsnippet
+
+snippet expne "expect(..).to_not eq(..)"
+expect(${1:actual}).to_not eq(${0:${VISUAL:expected}})
+endsnippet
+
+# be
+snippet expbe "expect(..).to be(..)"
+expect(${1:actual}).to be(${0:${VISUAL:expected}})
+endsnippet
+
+snippet expnbe "expect(..).to_not be(..)"
+expect(${1:actual}).to_not be(${0:${VISUAL:expected}})
+endsnippet
+
+snippet "exp(ect)?beb(etween)?i(nclusive)?" "expect(..).to be_between(..).inclusive"
+expect(${1:actual}).to be_between(${0:${VISUAL:minimum,maximum}}).inclusive
+endsnippet
+
+snippet "exp(ect)?nbeb(etween)?i(nclusive)?" "expect(..).to_not be_between(..).inclusive"
+expect(${1:actual}).to_not be_between(${0:${VISUAL:minimum,maximum}}).inclusive
+endsnippet
+
+snippet "exp(ect)?beb(etween)?e(xclusive)?" "expect(..).to be_between(..).exclusive"
+expect(${1:actual}).to be_between(${0:${VISUAL:minimum,maximum}}).inclusive
+endsnippet
+
+snippet "exp(ect)?nbeb(etween)?e(xclusive)?" "expect(..).to_not be_between(..).exclusive"
+expect(${1:actual}).to_not be_between(${0:${VISUAL:minimum,maximum}}).exclusive
+endsnippet
+
+snippet "exp(ect)?bei(nstance)?o" "expect(..).to be_instance_of(..)"
+expect(${1:actual}).to be_instance_of(${0:${VISUAL:expected}})
+endsnippet
+
+snippet "exp(ect)?bek(ind)?o" "expect(..).to be_kind_of"
+expect(${1:actual}).to be_king_of(${0:${VISUAL:expected}})
+endsnippet
+
+# match
+snippet "exp(ect)?m(atch)?" "expect(..).to match(..)" r
+expect(${1:actual}).to match(/${0:${VISUAL:expected}}/)
+endsnippet
+
+snippet "exp(ect)?n(ot)?m(atch)?" "expect(..).to_not match(..)" r
+expect(${1:actual}).to_not match(/${0:${VISUAL:expected}}/)
+endsnippet
+
+# satisfy
+snippet "exp(ect)?sa(tisfy)?" "expect(..).to satisfy { .. }" r
+expect(${1:actual}).to satisfy { |${2:value}| ${0:${VISUAL:expected}} }
+endsnippet
+
+# output
+snippet "exp(ect)ioo(utput)?" "expect { .. }.to output(..).to_stdout"
+expect { ${1:actual} }.to output(${0:${VISUAL:output expected}}).to_stdout
+endsnippet
+
+snippet "exp(ect)ioe(rror)?" "expect { .. }.to output(..).to_stdout"
+expect { ${1:actual} }.to output(${0:${VISUAL:error expected}}).to_stderr
+endsnippet
+
