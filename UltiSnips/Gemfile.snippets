@@ -1,0 +1,39 @@
+snippet src "source 'https://rubygems.org'"
+source 'https://rubygems.org'
+endsnippet
+
+snippet srcdo "source .. do .. end"
+source '${1:url}' do
+	${0:${VISUAL:# add some gems}}
+end
+endsnippet
+
+snippet gem "gem 'gem-name'"
+gem '${0:${VISUAL:gem-name}}'
+endsnippet
+
+snippet gemv "gem 'gem-name', '>=1.0'"
+gem '${1:gem-name}', '${2:>=}${0:version}'
+endsnippet
+
+snippet "gemg(roup)?" "gem 'gem-name', group: :group_name" r
+gem '${1:gem-name}', group: :${0:development}
+endsnippet
+
+snippet gemgit "gem 'gem-name', git: 'https://url/to/git'"
+gem '${1:gem-name}', git: 'https://${0:url}'
+endsnippet
+
+snippet gemgithub "gem 'gem-name', github: 'owner/repo_name'"
+gem '${1:gem-name}', github: '${2:owner}/${0:repo_name}'
+endsnippet
+
+snippet gemsrc "gem 'gem-name', source: 'https://url/to/source'"
+gem '${1:gem-name}', '${2:version}', source: 'https://${0:url}'
+endsnippet
+
+snippet group "group .. do .. end"
+group :${1:development} do
+	${0:${VISUAL:# add some gems}}
+end
+endsnippet
