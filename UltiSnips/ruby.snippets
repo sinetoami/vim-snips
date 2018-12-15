@@ -12,7 +12,7 @@ def complete(t, opts):
 				return opts[0]
 		return ' | '.join(opts)
 
-def write_instance_vars(arglist, snip, is_clas):
+def write_instance_vars(arglist, snip, is_class):
 	args = str(arglist).split(',')
 	for arg in args:
 		name = arg.strip().replace(':', ' ').split(' ', 1)[0]
