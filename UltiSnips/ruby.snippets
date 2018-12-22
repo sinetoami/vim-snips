@@ -177,7 +177,13 @@ ${1:from}.step(${2:to}, ${3:step}) do |${4:item}|
 end
 endsnippet
 
-snippet "(\S+)\.times" ".times { |i| ... }" r
+snippet "(\S+)\.timesd" ".times do |i| ... end" r
+`!p snip.rv=match.group(1)`.times do |${1:i}|
+	${0:${VISUAL}}
+end
+endsnippet
+
+snippet "(\S+)\.timesl" ".times { |i| ... }" r
 `!p snip.rv=match.group(1)`.times { |${1:i}| ${0:${VISUAL}} }
 endsnippet
 
