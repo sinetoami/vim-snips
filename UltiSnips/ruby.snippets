@@ -94,6 +94,11 @@ snippet unlessl "[do something] unless [condition]"
 ${1:${VISUAL}} unless ${0:condition}
 endsnippet
 
+# ternary
+snippet t?: "true ? 'this is true' : 'this is false'"
+${1:${VISUAL:condition}} ? ${2:'this is true'} : ${3:'this is false'}
+endsnippet
+
 #
 # case switch
 #
